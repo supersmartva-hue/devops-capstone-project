@@ -1,18 +1,17 @@
 # DevOps Capstone Project
 
-This project implements the Customer Accounts Microservice.
+Customer Accounts Microservice built using Python Flask.
 
 ## Features
+- Create an Account
+- Read an Account
+- Update an Account
+- Delete an Account
+- List all Accounts
 
-- Create an account
-- Read account information
-- Update account
-- Delete account
-- List all accounts
-
-## Technology
-
-- Python Flask
+## Technology Used
+- Python
+- Flask
 - Docker
 - Kubernetes
 - GitHub Actions
