@@ -1,6 +1,34 @@
-from flask import Blueprint, jsonify, request
-from .models import accounts, create_account, list_accounts, read_account, update_account, delete_account
+from flask import Flask, Blueprint, jsonify, request
 
+# In-memory storage
+accounts = []
+
+# Helper functions
+def create_account(data):
+    accounts.append(data)
+    return data
+
+def list_accounts():
+    return accounts
+
+def read_account(account_id):
+    for acc in accounts:
+        if acc["id"] == account_id:
+            return acc
+    return None
+
+def update_account(account_id, data):
+    for i, acc in enumerate(accounts):
+        if acc["id"] == account_id:
+            accounts[i].update(data)
+            return accounts[i]
+    return None
+
+def delete_account(account_id):
+    global accounts
+    accounts = [acc for acc in accounts if acc["id"] != account_id]
+
+# Blueprint
 api_bp = Blueprint('api', __name__)
 
 @api_bp.route('/', methods=['POST'])
@@ -32,3 +60,10 @@ def update(account_id):
 def delete(account_id):
     delete_account(account_id)
     return jsonify({"message": "Deleted"}), 200
+
+# Flask app
+app = Flask(__name__)
+app.register_blueprint(api_bp, url_prefix='/accounts')
+
+if __name__ == "__main__":
+    app.run(debug=True)
