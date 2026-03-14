@@ -1,11 +1,14 @@
+
 from flask import Flask
+from flask_talisman import Talisman
 from flask_cors import CORS
 
-def create_app():
-    app = Flask(__name__)
-    CORS(app)
-    
-    from .routes import api_bp
-    app.register_blueprint(api_bp, url_prefix='/accounts')
-    
-    return app
+app = Flask(__name__)
+
+# Initialize CORS
+CORS(app)
+
+# Initialize Talisman for Security Headers
+talisman = Talisman(app)
+
+from service import routes, models
